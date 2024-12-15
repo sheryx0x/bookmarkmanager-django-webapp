@@ -54,3 +54,9 @@ def add_category(request):
     else:
         form = CategoryForm()
     return render(request, 'bookmarkmanagerapp/add_category.html', {'form': form})
+
+
+def category_detail(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+    bookmarks = category.bookmarks.all()  
+    return render(request, 'bookmarkmanagerapp/category_detail.html', {'category': category, 'bookmarks': bookmarks})
