@@ -58,5 +58,8 @@ def add_category(request):
 
 def category_detail(request, category_id):
     category = get_object_or_404(Category, id=category_id)
-    bookmarks = category.bookmarks.all()  
+    bookmarks = category.bookmarks.filter(category=category)  
+    search_query = request.GET.get('search','')
+    if search_query:
+        bookmarks = bookmarks.filter(title__icontains=search_query)
     return render(request, 'bookmarkmanagerapp/category_detail.html', {'category': category, 'bookmarks': bookmarks})
